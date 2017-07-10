@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>购买书本</title>
+	<script src="js/jquery-1.12.3.js"></script>
+</head>
+<link rel="stylesheet" href="book.css">
+<body>
+	<div class="zhifu">
+		<img src="img/zhifu.png" alt="">
+	</div>
+	<div class="header1">
+		<ul class="nav1">
+			<a href="">书吧</a>
+			<li><a href="book.html">网站首页</a></li>
+			<li><a href="###">关于我们</a></li>
+			<li><a href="bookshop.html">图书展示</a></li>
+			<li><a href="###">联系我们</a></li>
+			<li class="actA"><a href="buybook.html">购物车</a></li>
+			<li><a href="addbook.html">添加图书</a></li>
+		</ul>
+	</div>
+	
+	<div class="mid">
+		<div class="box6">
+			<h5>购物车</h5>
+			<div>
+				<table border="1">
+					<tr>
+						<th width="610" height="40">图书</th>
+						<th width="100" height="40">书名</th>
+						<th width="100" height="40">数量</th>
+						<th width="100" height="40">单价</th>
+						<th width="100" height="40">结算</th>
+						<th width="100" height="40">删除</th>
+					</tr>
+					<!-- <tr>
+						<td><img src="img/20170517092258.jpg" alt=""></td>
+						<td>刚发给对方电话费电话费</td>
+						<td>1本</td>
+						<td>100</td>
+						<td><span>付款</span></td>
+						<td><span>删除</span></td>
+					</tr> -->
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="foot">
+			<ul>
+				<li><a href="###">免费条款</a></li>
+				<li><a href="###">隐私保护</a></li>
+				<li><a href="###">咨询热点</a></li>
+				<li><a href="###">联系我们</a></li>
+				<li><a href="###">公司简介</a></li>
+				<li><a href="###">批发方案</a></li>
+				<li><a href="###">配送方式</a></li><br>
+			</ul>
+			<p>@2016-2999 SSS版权所有，并保留所有权利</p>
+		</div>
+	</div>
+ 	<script src="js/book.js"></script>
+ 	<script>
+ 		var tab = $(".mid .box6 table")[0];
+ 		$('.zhifu').click(
+ 			function(){
+ 				$('.zhifu').hide();
+ 			} 
+ 		);
+ 		function Createtr(obj){
+			var id = obj.id;
+			var bookname = obj.bookname;
+			var bookpic = obj.bookpic;
+			var bookprice = obj.bookprice;
+			var conts = document.createElement("tr");
+ 			conts.innerHTML = '<td><img src="'+ bookpic +'" alt=""></td><td>'+ bookname +'</td><td>1本</td><td>'+ bookprice +'</td><td><span>付款</span></td><td><span>删除</span></td>';
+ 			tab.appendChild(conts);
+
+ 			var btn1 = conts.getElementsByTagName("span")[0];
+ 			var btn2 = conts.getElementsByTagName("span")[1];
+ 			var id = obj.id;
+ 			btn1.onclick = function(){
+ 				$('.zhifu').show();
+ 			}
+ 			btn2.onclick = function(){
+ 				tab.removeChild(conts);
+ 				$.ajax({
+ 					url:"bookshop.php",
+		 			async:true,
+					data:{
+						act:"delid",
+						id:id
+					},
+					dataType:"text",
+					success:function(json){
+						console.log(json);
+						// window.location.href = "buybook.html";
+					}
+ 				});
+ 			}
+ 		}
+		$.ajax({
+ 			url:"bookshop.php",
+ 			async:true,
+			data:{
+				act:"shows"
+			},
+			dataType:"json",
+			success:function(json){
+				// console.log(json);
+				// console.log(json.length);
+				for(var i=0;i<json.length;i++){
+					Createtr(json[i]);
+				}
+				// Createtr(json[0]);
+			}
+ 		})
+
+ 	</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>书本商城</title>
+	<script src="js/jquery-1.12.3.js"></script>
+</head>
+<link rel="stylesheet" href="book.css">
+<body>
+	<div class="header1">
+		<ul class="nav1">
+			<a href="">书吧</a>
+			<li class="actA"><a href="book.html">网站首页</a></li>
+			<li><a href="###">关于我们</a></li>
+			<li><a href="bookshop.html">图书展示</a></li>
+			<li><a href="###">联系我们</a></li>
+			<li><a href="buybook.html">购物车</a></li>
+			<li><a href="addbook.html">添加图书</a></li>
+		</ul>
+	</div>
+	<div class="mid">
+		<div class="box">
+			<div class="bodys">
+				<h2>我的书城</h2>
+				<p>这里拥有世界各地的书籍，只有你想不到，没有我们这里没有的图书。</p>
+				<img src="img/shouye.png" alt="shouye">
+			</div>
+			<div class="login">
+				<h3>快速登录</h3>
+				<input id="user" type="text" placeholder=" 用户名" name="user">
+				<input id="pass" type="password" placeholder=" 密码"><br>
+				<button type="button" onclick="denglv()">登录</button><button type="button" onclick="zhuce()">注册</button>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="js/book.js"></script>
+<script>
+
+	function zhuce(){
+		var user = $("#user").val();
+		var pass = $("#pass").val();
+		if(user == ""||pass == ""){
+			alert("用户名或密码不能为空");
+			return;
+		}
+	
+		$.ajax({
+			type:"post",
+			url:"php/zhuce.php",
+			async:true,
+			data:{
+				user:user,
+				pass:pass
+			},
+			dataType:"json",
+			success:function(json){
+				// console.log(json);
+				if(json.error == 0){
+					alert("注册成功！请返回登陆！");
+				    // window.location.href = "zhuce.php";
+				}else if(json.error == 1){
+					alert("用户名重复，注册失败！");
+				}
+			}
+		});
+	}
+
+	function denglv(){
+		var user = $("#user").val();
+		var pass = $("#pass").val();
+		if(user == ""||pass == ""){
+			alert("用户名或密码不能为空");
+			return;
+		}
+		$.ajax({
+			url:"php/denglv.php",
+			async:true,
+			data:{
+				user:user,
+				pass:pass
+			},
+			dataType:"json",
+			success:function(data){
+				console.log(data);
+				if(data.status == 1){
+					alert("登陆成功！");
+					window.location.href = "bookshop.html";
+				}else{
+					alert("用户名或密码错误！");
+				}
+			}
+		});
+	}
+</script>
+</html>

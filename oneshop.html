@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>单个书本展示</title>
+	<script src="js/jquery-1.12.3.js"></script>
+</head>
+<link rel="stylesheet" href="book.css">
+<body>
+	<div class="header1">
+		<ul class="nav1">
+			<a href="">书吧</a>
+			<li><a href="book.html">网站首页</a></li>
+			<li><a href="###">关于我们</a></li>
+			<li class="actA"><a href="bookshop.html">图书展示</a></li>
+			<li><a href="###">联系我们</a></li>
+			<li><a href="buybook.html">购物车</a></li>
+			<li><a href="addbook.html">添加图书</a></li>
+		</ul>
+	</div>
+	<div class="mid">
+		<!-- <div class="box5"> -->
+			<!-- <img src="img/20170517092258.jpg" alt="">
+			<div>
+				<h1>电视剧发送到了开始的减肥啥地方就是的；佛山市；打飞机</h1>
+				<p>圣诞节发生了贷款就发生的水电费刘登生福建省；的福建师大老傅了；受打击了坚实的；了就</p>
+				<div>
+					<span>作者：</span><p>反倒是</p><br>
+					<span>出版社：</span><p>是电风扇的</p><br>
+					<span>出版时间：</span><p>是电风扇的</p><br>
+					<span>国际标准书号ISBN：</span><p>是电风扇的</p><br>
+					<span>友情价格：</span><i>￥</i><em>4234</em><br>
+				</div>
+				<button class="mai1">加入购物车</button><button class="mai2">立即购买</button>
+			</div> -->
+		<!-- </div> -->
+	</div>
+	
+	<script src="js/book.js"></script>
+	<script>
+		var mid = $(".mid")[0];
+		function Creatediv(obj){
+			var id = obj.id;
+			var bookname = obj.bookname;
+			var bookpic = obj.bookpic;
+			var bookintro = obj.bookintro;
+			var bookwriter = obj.bookwriter;
+			var bookpress = obj.bookpress;
+			var bookdate = obj.bookdate;
+			var bookisbn = obj.bookisbn;
+			var bookprice = obj.bookprice;
+			var conts = document.createElement("div");
+			conts.setAttribute("class","box5");
+ 			conts.innerHTML = '<img src="'+ bookpic +'" alt=""><div><h1>'+ bookname +'</h1><p>'+ bookintro +'</p><div><span>作者：</span><p>'+ bookwriter +'</p><br><span>出版社：</span><p>'+ bookpress +'</p><br><span>出版时间：</span><p>'+ bookdate +'</p><br><span>国际标准书号ISBN：</span><p>'+ bookisbn +'</p><br><span>友情价格：</span><i>￥</i><em>'+ bookprice +'</em><br></div><button class="mai1">入购物车</button><button class="mai2">立即购买</button></div>';
+ 			mid.appendChild(conts);
+
+ 			var btnss = conts.getElementsByTagName("button")[0];
+ 			var btnss2 = conts.getElementsByTagName("button")[1];
+ 			var id = obj.id;
+ 			btnss.onclick = function(){
+ 				// window.location.href = "buybook.html";
+ 				$.ajax({
+ 					url:"bookshop.php",
+		 			async:true,
+					data:{
+						act:"getids",
+						id:id
+					},
+					dataType:"text",
+					success:function(json){
+						console.log(json);
+						window.location.href = "buybook.html";
+					}
+ 				});
+ 			}
+ 			btnss2.onclick = function(){
+ 				// window.location.href = "buybook.html";
+ 				$.ajax({
+ 					url:"bookshop.php",
+		 			async:true,
+					data:{
+						act:"getids",
+						id:id
+					},
+					dataType:"text",
+					success:function(json){
+						console.log(json);
+						window.location.href = "buybook.html";
+					}
+ 				});
+ 			}
+ 		}
+ 		$.ajax({
+ 			url:"bookshop.php",
+ 			async:true,
+			data:{
+				act:"show"
+			},
+			dataType:"json",
+			success:function(json){
+				// console.log(json[0]);
+				Creatediv(json[0]);
+			}
+ 		})
+
+	</script>
+</body>
+</html>
